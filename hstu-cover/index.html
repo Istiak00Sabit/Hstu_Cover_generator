@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoverCraft — HSTU Report Cover Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-l">
+    <div class="nav-logo">CC</div>
+    <div class="nav-name">Cover<span>Craft</span></div>
+    <div class="badge">HSTU Edition</div>
+  </div>
+  <div class="nav-r">
+    <button class="btn bg" onclick="copyLatex()">Copy LaTeX</button>
+    <button class="btn bb" onclick="openOverleaf()">🌿 Overleaf</button>
+    <button class="btn bp" onclick="printPDF()">⬇ Download PDF</button>
+  </div>
+</nav>
+
+<!-- ── WORKSPACE ── -->
+<div class="workspace">
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-scroll">
+
+      <!-- University -->
+      <div class="sec">University</div>
+      <div class="field">
+        <label>University Name</label>
+        <input id="uniName" value="Hajee Mohammad Danesh Science and Technology University" oninput="render()"/>
+      </div>
+      <div class="r2">
+        <div class="field">
+          <label>City / Address</label>
+          <input id="uniCity" value="Dinajpur-5200, Bangladesh" oninput="render()"/>
+        </div>
+        <div class="field">
+          <label>Short Name</label>
+          <input id="uniShort" value="HSTU" oninput="render()"/>
+        </div>
+      </div>
+
+      <!-- Logo -->
+      <div class="sec">University Logo</div>
+      <div class="logo-strip">
+        <img id="logoThumb" class="logo-thumb" src="assets/hstu_logo.png" alt="logo"/>
+        <div class="logo-info">
+          <strong id="logoName">HSTU Official Logo</strong>
+          <span>Click Change to upload custom</span>
+        </div>
+        <button class="bsm" onclick="document.getElementById('logoFileInput').click()">Change</button>
+        <button class="bsm" onclick="resetLogo()">Reset</button>
+        <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogo(event)"/>
+      </div>
+
+      <!-- Report -->
+      <div class="sec">Report Details</div>
+      <div class="field">
+        <label>Report / Thesis Title</label>
+        <textarea id="repTitle" rows="3" placeholder="Type the full title of your report or thesis" oninput="render()"></textarea>
+      </div>
+      <div class="field">
+        <label>Degree Description Paragraph</label>
+        <textarea id="degDesc" rows="4" oninput="render()">A thesis submitted to the Department of Computer Science and Engineering, Hajee Mohammad Danesh Science and Technology University, in partial fulfillment of the requirements for the degree of B.Sc. (Engineering) in Computer Science and Engineering.</textarea>
+      </div>
+      <div class="r2">
+        <div class="field">
+          <label>Course Code</label>
+          <input id="courseCode" value="CSE 402" oninput="render()"/>
+        </div>
+        <div class="field">
+          <label>Course Title</label>
+          <input id="courseTitle" value="Project and Thesis Sessional" oninput="render()"/>
+        </div>
+      </div>
+
+      <!-- Department -->
+      <div class="sec">Department &amp; Faculty</div>
+      <div class="field">
+        <label>Department</label>
+        <select id="deptSel" onchange="onDeptChange()">
+          <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+          <option value="Electrical and Electronic Engineering">Electrical and Electronic Engineering</option>
+          <option value="Civil Engineering">Civil Engineering</option>
+          <option value="Mechanical Engineering">Mechanical Engineering</option>
+          <option value="Agricultural Engineering">Agricultural Engineering</option>
+          <option value="Food Engineering and Technology">Food Engineering and Technology</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="English">English</option>
+          <option value="Economics">Economics</option>
+          <option value="Agronomy">Agronomy</option>
+          <option value="Soil Science">Soil Science</option>
+          <option value="Horticulture">Horticulture</option>
+          <option value="Plant Pathology">Plant Pathology</option>
+          <option value="Animal Science">Animal Science</option>
+          <option value="Fisheries">Fisheries</option>
+          <option value="Veterinary Science">Veterinary Science</option>
+          <option value="custom">Custom / Other</option>
+        </select>
+      </div>
+      <div class="field" id="deptCustWrap" style="display:none">
+        <label>Custom Department</label>
+        <input id="deptCust" placeholder="Type department name" oninput="render()"/>
+      </div>
+
+      <div class="field">
+        <label>Faculty</label>
+        <select id="facSel" onchange="onFacChange()">
+          <option value="Computer Science and Engineering">Faculty of Computer Science and Engineering</option>
+          <option value="Engineering and Technology">Faculty of Engineering and Technology</option>
+          <option value="Agriculture">Faculty of Agriculture</option>
+          <option value="Science">Faculty of Science</option>
+          <option value="Business Studies">Faculty of Business Studies</option>
+          <option value="Veterinary and Animal Science">Faculty of Veterinary and Animal Science</option>
+          <option value="Fisheries">Faculty of Fisheries</option>
+          <option value="custom">Custom / Other</option>
+        </select>
+      </div>
+      <div class="field" id="facCustWrap" style="display:none">
+        <label>Custom Faculty</label>
+        <input id="facCust" placeholder="Type faculty name" oninput="render()"/>
+      </div>
+
+      <!-- Members -->
+      <div class="sec">Group Members</div>
+      <div class="members-wrap" id="membersList"></div>
+      <button class="btn-add-m" onclick="addMember()">+ Add Member</button>
+
+      <!-- Date -->
+      <div class="sec">Submission Date</div>
+      <div class="field">
+        <label>Date (auto-filled with today)</label>
+        <input id="subDate" type="date" oninput="render()"/>
+      </div>
+      <div style="height:1rem"></div>
+
+    </div><!-- end form-scroll -->
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn bp" onclick="printPDF()">🖨️ Print / Download as PDF</button>
+      <div class="btn-row3">
+        <button class="btn bb" onclick="openOverleaf()">🌿 Overleaf</button>
+        <button class="btn bg" onclick="copyLatex()">📋 Copy .tex</button>
+        <button class="btn bg" onclick="downloadTex()">⬇ Download .tex</button>
+      </div>
+    </div>
+
+  </div><!-- end form-panel -->
+
+  <!-- PREVIEW PANEL -->
+  <div class="preview-panel">
+    <div class="preview-bar">
+      <div class="tabs">
+        <button class="ptab on" id="tab-prev"  onclick="switchTab('prev')">👁 Preview</button>
+        <button class="ptab"    id="tab-latex" onclick="switchTab('latex')">{ } LaTeX</button>
+      </div>
+      <div class="live"><div class="live-dot"></div> Live</div>
+    </div>
+
+    <!-- Cover Canvas -->
+    <div class="canvas-area" id="pane-prev">
+      <div class="cover-paper" id="coverPaper">
+        <div class="cp-title" id="cp-title">REPORT TITLE WILL APPEAR HERE</div>
+        <div class="t12 cp-desc" id="cp-desc"></div>
+        <div class="t12" id="cp-code"></div>
+        <div class="t12" id="cp-ctitle"></div>
+        <div class="t12 cp-by">By</div>
+        <table class="cp-members-table"><tbody id="cp-mtbody"></tbody></table>
+        <div class="spacer"></div>
+        <img id="cp-logo" class="cp-logo" src="assets/hstu_logo.png" alt="HSTU Logo"/>
+        <div class="cp-dept" id="cp-dept"></div>
+        <div class="cp-date" id="cp-date"></div>
+      </div>
+    </div>
+
+    <!-- LaTeX Pane -->
+    <div class="latex-pane" id="pane-latex">
+      <div class="latex-toolbar">
+        <div class="latex-file"><div class="dot-green"></div> main.tex</div>
+        <div class="latex-actions">
+          <button class="btn bg sm" onclick="copyLatex()">Copy</button>
+          <button class="btn bg sm" onclick="downloadTex()">Download</button>
+        </div>
+      </div>
+      <textarea id="latexSrc" spellcheck="false" readonly></textarea>
+    </div>
+
+  </div><!-- end preview-panel -->
+
+</div><!-- end workspace -->
+
+<!-- Print Frame -->
+<div id="printFrame"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg">Done!</span>
+</div>
+
+<!-- Scripts — order matters -->
+<script src="js/members.js"></script>
+<script src="js/latex.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
