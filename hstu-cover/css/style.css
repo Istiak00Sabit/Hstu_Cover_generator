@@ -333,13 +333,13 @@ nav {
 .cp-members-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
 }
 .cp-members-table td {
   text-align: center;
-  padding: 0 6px;
+  padding: 0 10px;
   vertical-align: top;
-  word-break: break-word;
+  white-space: nowrap;
 }
 .cp-members-table .row-name td {
   font-size: 12pt; font-weight: 700;
