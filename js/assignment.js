@@ -118,7 +118,7 @@ function printAssign() {
     '  text-align: center; line-height: 1.6; margin-bottom: 30pt; }',
     '.ap-title { font-size: 13pt; font-weight: 700; font-variant: small-caps;',
     '  text-align: center; margin-bottom: 30pt; }',
-    '.ap-section-wrap { width: 100%; margin-bottom: 20pt; }',
+    '.ap-section-wrap { width: 60%; margin-bottom: 20pt; }',
     '.ap-section-label { font-size: 12pt; font-weight: 700;',
     '  font-family: "Times New Roman", Times, serif; margin-bottom: 6pt; }',
     '.ap-row { font-size: 12pt; font-weight: 700; padding-left: 30pt;',
