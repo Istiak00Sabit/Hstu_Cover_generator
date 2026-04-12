@@ -445,7 +445,7 @@ nav {
   margin-bottom: 30px; color: #000; width: 100%;
 }
 .ap-section-wrap {
-  width: 100%; text-align: left; margin-bottom: 16px;
+  width: 60%; text-align: left; margin-bottom: 20px;
 }
 .ap-section-label {
   font-family: var(--serif); font-size: 12pt; font-weight: 700;
@@ -453,7 +453,7 @@ nav {
 }
 .ap-row {
   font-family: var(--serif); font-size: 12pt; font-weight: 700;
-  color: #000; line-height: 1.8; padding-left: 24px;
+  color: #000; line-height: 1.8; padding-left: 20px;
 }
 .ap-lbl { font-weight: 700; }
 .ap-date {
