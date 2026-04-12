@@ -14,10 +14,17 @@
     <div class="nav-name">Cover<span>Craft</span></div>
     <div class="badge">HSTU Edition</div>
   </div>
-  <div class="nav-r">
+  <div class="nav-mid">
+    <button class="mode-btn on" id="mode-report" onclick="switchMode('report')">📄 Report Cover</button>
+    <button class="mode-btn" id="mode-assign" onclick="switchMode('assign')">📝 Assignment Cover</button>
+  </div>
+  <div class="nav-r" id="nav-actions-report">
     <button class="btn bg" onclick="copyLatex()">Copy LaTeX</button>
     <button class="btn bb" onclick="openOverleaf()">🌿 Overleaf</button>
     <button class="btn bp" onclick="printPDF()">⬇ Download PDF</button>
+  </div>
+  <div class="nav-r" id="nav-actions-assign" style="display:none">
+    <button class="btn bp" onclick="printAssign()">⬇ Download PDF</button>
   </div>
 </nav>
 <div class="workspace">
@@ -176,11 +183,132 @@
     </div>
   </div>
 </div>
+<!-- ── ASSIGNMENT WORKSPACE ── -->
+<div class="workspace" id="workspace-assign" style="display:none">
+  <div class="form-panel">
+    <div class="form-scroll">
+      <div class="sec">University</div>
+      <div class="field"><label>University Name</label><input id="a-uniName" value="Hajee Mohammad Danesh Science and Technology University" oninput="renderAssign()"/></div>
+      <div class="field"><label>City / Address</label><input id="a-uniCity" value="Dinajpur-5200, Bangladesh" oninput="renderAssign()"/></div>
+      <div class="sec">Assignment Details</div>
+      <div class="field"><label>Assignment Number / Title</label><input id="a-title" value="Assignment #01" oninput="renderAssign()"/></div>
+      <div class="r2">
+        <div class="field"><label>Course Code</label><input id="a-courseCode" value="CSE 403" oninput="renderAssign()"/></div>
+        <div class="field"><label>Course Title</label><input id="a-courseTitle" placeholder="e.g. Software Engineering" oninput="renderAssign()"/></div>
+      </div>
+      <div class="sec">Submitted By</div>
+      <div class="field"><label>Full Name</label><input id="a-name" value="Khandakar Istiak Muntasir" oninput="renderAssign()"/></div>
+      <div class="r2">
+        <div class="field"><label>Roll / Student ID</label><input id="a-roll" value="2102010" oninput="renderAssign()"/></div>
+        <div class="field"><label>Batch / Session</label><input id="a-batch" value="2021" oninput="renderAssign()"/></div>
+      </div>
+      <div class="r2">
+        <div class="field"><label>Level</label><input id="a-level" value="4" oninput="renderAssign()"/></div>
+        <div class="field"><label>Semester</label><input id="a-semester" value="I" oninput="renderAssign()"/></div>
+      </div>
+      <div class="field"><label>Department</label>
+        <select id="a-deptSel" onchange="renderAssign()">
+          <optgroup label="── Faculty of Computer Science and Engineering ──">
+            <option value="Computer Science and Engineering" selected>Computer Science and Engineering</option>
+            <option value="Electrical and Electronic Engineering">Electrical and Electronic Engineering</option>
+            <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+          </optgroup>
+          <optgroup label="── Faculty of Agriculture ──">
+            <option value="Agronomy">Agronomy</option>
+            <option value="Horticulture">Horticulture</option>
+            <option value="Soil Science">Soil Science</option>
+            <option value="Entomology">Entomology</option>
+            <option value="Plant Pathology">Plant Pathology</option>
+            <option value="Genetics and Plant Breeding">Genetics and Plant Breeding</option>
+            <option value="Crop Physiology and Ecology">Crop Physiology and Ecology</option>
+            <option value="Agricultural Extension">Agricultural Extension</option>
+            <option value="Agricultural Chemistry">Agricultural Chemistry</option>
+            <option value="Agroforestry and Environment">Agroforestry and Environment</option>
+            <option value="Biochemistry and Molecular Biology">Biochemistry and Molecular Biology</option>
+          </optgroup>
+          <optgroup label="── Faculty of Engineering ──">
+            <option value="Agricultural and Industrial Engineering">Agricultural and Industrial Engineering</option>
+            <option value="Food Processing and Preservation">Food Processing and Preservation</option>
+            <option value="Food Engineering and Technology">Food Engineering and Technology</option>
+            <option value="Food Science and Nutrition">Food Science and Nutrition</option>
+            <option value="Architecture">Architecture</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+          </optgroup>
+          <optgroup label="── Faculty of Veterinary and Animal Science ──">
+            <option value="Anatomy and Histology">Anatomy and Histology</option>
+            <option value="Animal Science">Animal Science</option>
+            <option value="Dairy and Poultry Science">Dairy and Poultry Science</option>
+            <option value="Genetics and Animal Breeding">Genetics and Animal Breeding</option>
+            <option value="Microbiology">Microbiology</option>
+            <option value="Medicine, Surgery and Obstetrics">Medicine, Surgery and Obstetrics</option>
+            <option value="Pathology and Parasitology">Pathology and Parasitology</option>
+            <option value="Physiology and Pharmacology">Physiology and Pharmacology</option>
+          </optgroup>
+          <optgroup label="── Faculty of Business Studies ──">
+            <option value="Accounting">Accounting</option>
+            <option value="Finance and Banking">Finance and Banking</option>
+            <option value="Management">Management</option>
+            <option value="Marketing">Marketing</option>
+          </optgroup>
+          <optgroup label="── Faculty of Science ──">
+            <option value="Chemistry">Chemistry</option>
+            <option value="Physics">Physics</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Statistics">Statistics</option>
+          </optgroup>
+          <optgroup label="── Faculty of Fisheries ──">
+            <option value="Fisheries Biology and Genetics">Fisheries Biology and Genetics</option>
+            <option value="Fisheries Management">Fisheries Management</option>
+            <option value="Fisheries Technology">Fisheries Technology</option>
+            <option value="Aquaculture">Aquaculture</option>
+          </optgroup>
+          <optgroup label="── Faculty of Social Science and Humanities ──">
+            <option value="English">English</option>
+            <option value="Economics">Economics</option>
+            <option value="Sociology">Sociology</option>
+            <option value="Development Studies">Development Studies</option>
+          </optgroup>
+          <option value="custom-a">Custom / Other</option>
+        </select>
+      </div>
+      <div class="field" id="a-deptCustWrap" style="display:none"><label>Custom Department</label><input id="a-deptCust" placeholder="Type department name" oninput="renderAssign()"/></div>
+      <div class="sec">Submitted To</div>
+      <div class="field"><label>Teacher Name</label><input id="a-teacher" value="Dr. Ashish Kumar Mandal" oninput="renderAssign()"/></div>
+      <div class="field"><label>Designation</label><input id="a-designation" value="Professor" oninput="renderAssign()"/></div>
+      <div class="field"><label>Teacher Department</label><input id="a-teacherDept" value="Department of Computer Science and Engineering" oninput="renderAssign()"/></div>
+      <div class="field"><label>Teacher University</label><input id="a-teacherUni" value="Hajee Mohammad Danesh Science and Technology University" oninput="renderAssign()"/></div>
+      <div class="sec">Submission Date</div>
+      <div class="field"><label>Date</label><input id="a-date" type="date" oninput="renderAssign()"/></div>
+      <div style="height:1rem"></div>
+    </div>
+    <div class="actions">
+      <button class="btn bp" onclick="printAssign()">🖨️ Print / Download as PDF</button>
+    </div>
+  </div>
+  <div class="preview-panel">
+    <div class="preview-bar">
+      <div class="tabs"><span style="font-size:.75rem;color:var(--sub)">👁 Live Preview</span></div>
+      <div class="live"><div class="live-dot"></div> Live</div>
+    </div>
+    <div class="canvas-area">
+      <div class="cover-paper" id="assignPaper">
+        <img id="a-logo" class="cp-logo" src="assets/hstu_logo.png" alt="HSTU Logo" style="width:96px;height:96px;margin-bottom:10px"/>
+        <div class="ap-uni" id="ap-uni"></div>
+        <div class="ap-title" id="ap-title"></div>
+        <div class="ap-box" id="ap-box"></div>
+        <div class="ap-date" id="ap-date"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="printFrame"></div>
 <div class="toast" id="toast"><span id="toast-icon">✓</span><span id="toast-msg">Done!</span></div>
 <script src="js/members.js"></script>
 <script src="js/latex.js"></script>
 <script src="js/pdf.js"></script>
 <script src="js/app.js"></script>
+<script src="js/assignment.js"></script>
 </body>
 </html>
